@@ -6,6 +6,46 @@ revision: HEAD
 
 Layer maintainer: Enrico Butera <ebutera@users.berlios.de>
 
+* Minimalistic HOW-TO
+
+This is how an example of angstrom session can look like:
+
+1. Get angstrom/OE:
+   # mkdir angstrom
+   # cd angstrom
+   # git clone git://github.com/Angstrom-distribution/setup-scripts.git
+
+2. Let's make sure that OE is up to date:
+   # ./oebb.sh udpate
+
+3. Export your machine name, so scripts know what you want to build:
+   # export MACHINE=igep0020
+
+4. We are almost there. Almost. This is what would happen if you would try building console-image at this point:
+   # ./oebb.sh bitbake console-image
+      (...)
+   # Please set a valid MACHINE in your local.conf or environment
+
+5. Apparently we are missing something... It turns out that OE build environment does not know our machine.
+   In OE meta-layers are archives used to describe various stuff, e.g. board support packages.
+   Let's get meta layer that describes our machine
+
+   # cd sources
+   # git clone git://github.com/ebutera/meta-igep.git
+   # cd ..
+   # vim conf/bblayers.conf
+      Add this line:
+          ${TOPDIR}/sources/meta-igep \
+      somewhere to the list of BSPs
+
+6. Let's make sure that oe is up to date (again):
+   # ./oebb.sh udpate
+
+7. Let's try to build console-image:
+   # ./oebb.sh bitbake console-image
+      (...)
+   SUCCESS!
+
 * U-Boot args
 
 At the u-boot prompt of a stock IGEPv2 board:
