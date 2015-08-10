@@ -8,15 +8,20 @@ COMPATIBLE_MACHINE = "eccerobo"
 # Pick up shared functions
 inherit kernel
 
-KERNEL_DEFCONFIG = "igep00x0robot_defconfig"
+#KBUILD_DEFCONFIG_KMACHINE ?= "igep00x0robot_defconfig"
+
+do_configure() {
+        oe_runmake igep00x0robot_defconfig
+}
+
 
 S = "${WORKDIR}/git"
 
 BRANCH = "eccerobo"
 SRCREV = "eccerobo"
 
-PR = "r0"
-PV = "2.6.35-0"
+PR = "r22"
+PV = "2.6.37-eccerobo"
 
 SRC_URI = "git://github.com/nazgee/igep-kernel.git;protocol=git;branch=${BRANCH} "
 
